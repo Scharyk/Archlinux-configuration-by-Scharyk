@@ -1,0 +1,95 @@
+configuration {
+    modi: "drun";
+    show-icons: true;
+    icon-theme: "Papirus";
+    drun-display-format: "{name}";
+    disable-history: false;
+    hide-scrollbar: true;
+    display-drun: "   Поиск: ";
+}
+
+* {
+    bg-dark:     #0f0f12;
+    bg-light:    #1a1a22;
+    accent:      #3a3a4a;
+    fg-white:    #eeeeee;
+    fg-gray:     #888888;
+    
+    background-color: transparent;
+    text-color: @fg-white;
+}
+
+window {
+    transparency: "real";
+    background-color: @bg-dark;
+    border: 3px;
+    border-color: @accent;
+    border-radius: 0px;
+    
+    /* Занимаем 90% ширины и 85% высоты экрана — огромный жирный лаунчер */
+    width: 90%;
+    height: 85%;
+    
+    location: center;
+    anchor: center;
+}
+
+mainbox {
+    background-color: transparent;
+    children: [ inputbar, listview ];
+    padding: 40px; /* Больше отступов внутри для солидности */
+}
+
+inputbar {
+    background-color: @bg-light;
+    border-radius: 0px;
+    padding: 15px;
+    margin: 0px 0px 30px 0px;
+    children: [ prompt, entry ];
+}
+
+prompt {
+    text-color: @fg-gray;
+    font: "Sans 12";
+}
+
+entry {
+    placeholder: "Что ищем, босс?...";
+    placeholder-color: @fg-gray;
+    text-color: @fg-white;
+    font: "Sans 12";
+}
+
+listview {
+    background-color: transparent;
+    columns: 6;       /* Сетка стала шире: 6 колонок квадратных плиток */
+    lines: 4;         /* Вмещает 4 ряда программ */
+    spacing: 20px;    /* Больше пространства между плитками */
+    cycle: true;
+    dynamic: true;
+    layout: vertical;
+}
+
+element {
+    background-color: @bg-light;
+    text-color: @fg-white;
+    orientation: vertical; 
+    border-radius: 0px;
+    padding: 25px 10px; /* Карточки стали еще более массивными */
+}
+
+element-icon {
+    size: 64px;          /* Иконки теперь огромные и четкие */
+    horizontal-align: 0.5;
+    margin: 0px 0px 15px 0px;
+}
+
+element-text {
+    horizontal-align: 0.5;
+    font: "Sans 11";
+}
+
+element selected {
+    background-color: @accent;
+    text-color: @fg-white;
+}

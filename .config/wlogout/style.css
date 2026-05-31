@@ -1,0 +1,26 @@
+window {
+    background-color: rgba(15, 15, 15, 0.5); /* Размытый задний фон */
+}
+
+grid {
+    margin: 300px 100px; /* Центрируем ленту по экрану */
+}
+
+button {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    margin: 10px;
+    
+    /* ВОТ ОНА — МАГИЯ 3D СКОСА КАК НА ТВОЕМ СКРИНЕ */
+    transform: skewX(-15deg); 
+    
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+button:focus, button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: #3498db; /* Неоновая рамка при наведении */
+    transform: skewX(-15deg) scale(1.05); /* Картинка увеличивается при выборе */
+}

@@ -1,0 +1,12 @@
+[
+    {
+        "label": "wall1",
+        "action": "swww img ~/Wallpapers/lodka_gory_o.jpg --transition-type center",
+        "text": ""
+    },
+    {
+        "label": "wall2",
+        "action": "swww img ~/Wallpapers/quasi_unkno.jpg --transition-type center",
+        "text": ""
+    }
+]
