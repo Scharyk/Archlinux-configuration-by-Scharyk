@@ -1,0 +1,53 @@
+configuration {
+    show-icons:      true;
+}
+
+* {
+    background-color:            transparent;
+    text-color:                  #ffffff;
+}
+
+window {
+    width:                        400px;
+    height:                       450px;
+    location:                     center;
+    anchor:                       center;
+    background-color:            rgba(20, 20, 20, 0.98);
+    border:                       2px;
+    border-color:                 #444444;
+    border-radius:                16px;
+    padding:                      20px;
+}
+
+mainbox {
+    children:                    [ listview ];
+}
+
+listview {
+    columns:                      1;
+    lines:                        8;
+    spacing:                      10px;
+    background-color:            transparent;
+    cycle:                        true;
+}
+
+element {
+    padding:                      8px;
+    border-radius:                12px;
+    background-color:            rgba(255, 255, 255, 0.05);
+    orientation:                  horizontal;
+}
+
+element selected {
+    background-color:            rgba(255, 255, 255, 0.15);
+}
+
+element-icon {
+    size:                         24px;
+    margin:                       0px 10px 0px 0px;
+}
+
+element-text {
+    horizontal-align:             0.0;
+    vertical-align:               0.5;
+}

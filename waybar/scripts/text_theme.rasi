@@ -1,0 +1,55 @@
+configuration {
+    show-icons:      true;
+}
+
+* {
+    background-color:            transparent;
+    text-color:                  #ffffff;
+}
+
+window {
+    width:                        1498px;      /* Ширина, чтобы влезало по 5 картинок в ряд */
+    height:                       1044px;       /* Увеличили высоту, чтобы четко встали два ряда */
+    location:                     center;
+    anchor:                       center;
+    
+    background-color:            rgba(20, 20, 20, 0.98);
+    border:                       2px;
+    border-color:                 #444444;
+    border-radius:                16px;
+    padding:                      25px;
+}
+
+mainbox {
+    children:                    [ listview ];
+}
+listview {
+    columns:                      1;           /* Текст идет в один столбец */
+    lines:                        8;           /* Показывать 8 строчек */
+    fixed-columns:                true;
+    spacing:                      10px;
+    background-color:            transparent;
+    cycle:                        true;
+}
+
+element {
+    padding:                      8px;
+    border-radius:                12px;
+    background-color:            rgba(255, 255, 255, 0.05);
+    orientation:                  horizontal;  /* Чтобы текст был сбоку от иконки */
+}
+
+element selected {
+    background-color:            rgba(255, 255, 255, 0.15);
+}
+
+element-icon {
+    size:                         460px;       /* Оптимальный размер, чтобы сетка 5х2 не взрывала экран */
+    horizontal-align:             0.5;
+    vertical-align:               0.5;
+}
+
+element-text {
+    horizontal-align:             0.0;  /* Текст по левому краю, чтобы красиво читался */
+    vertical-align:               0.5;  /* По центру по вертикали */
+}

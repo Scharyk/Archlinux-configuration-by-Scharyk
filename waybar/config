@@ -1,0 +1,65 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 30,
+    "margin-top": 0,
+    "margin-left": 0,
+    "margin-right": 0,
+    "spacing": 4,
+    "modules-left": ["hyprland/workspaces", "hyprland/window"],
+    "modules-center": ["clock"],
+    "modules-right": ["tray", "hyprland/language", "cpu", "pulseaudio", "pulseaudio#microphone", "network", "custom/power"],
+
+    "hyprland/workspaces": {
+        "format": "{name}",
+        "on-click": "activate"
+    },
+    "hyprland/window": {
+        "format": " 󰣇  {title}",
+        "max-length": 30,
+        "separate-outputs": true
+    },
+    "clock": {
+        "interval": 1,
+        "format": "󱎫 {:%H:%M:%S}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+    "hyprland/language": {
+           "format": "󰌌 {}",
+           "format-en": "EN",
+           "format-ru": "RU",
+           "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next"
+       },
+    "cpu": {
+        "format": "󰍛 {usage}%",
+        "tooltip": false
+    },
+    "pulseaudio": {
+        "format": "󰕾 {volume}%",
+        "format-muted": "󰝟 Muted",
+        "on-click": "~/linux_betterwindows/waybar/scripts/sound_menu.sh"
+    },
+    "pulseaudio#microphone": {
+        "format": "{format_source}",
+        "format-source": "󰍬 {volume}%",
+        "format-source-muted": "󰍭 Muted",
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+    },
+    "network": {
+        "format-wifi": "󰤨 {essid}",
+        "format-ethernet": "󰈀 Wire",
+        "format-disconnected": "󰤮 Disconnected",
+        "tooltip-format-wifi": "Signal: {signaldBm}dBm",
+        "on-click": "~/linux_betterwindows/waybar/scripts/wifi_menu.sh"
+    },
+    "custom/power": {
+        "format": "󰐥",
+        "on-click": "wlogout",
+        "tooltip": false
+    },
+    "tray": {
+    "icon-size": 18,
+    "spacing": 10,
+    "show-passive-items": true
+},
+}
