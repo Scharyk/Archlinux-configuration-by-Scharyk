@@ -40,23 +40,27 @@ if [ ! -d "$REPO_DIR" ]; then
     git clone https://github.com/Scharyk/Archlinux-configuration-by-Scharyk.git "$REPO_DIR"
 fi
 
-# Жестко создаем чистую .config
+# Жестко создаем чистую .config если её не было
 mkdir -p "$HOME/.config"
 
 # Список папок для копирования
 CONFIGS=(hypr rofi waybar kitty wlogout waypaper dunst gtk-3.0)
 for cfg in "${CONFIGS[@]}"; do
     SRC_DIR=""
-    # Ищем, где лежит папка в репозитории (в корне или в .config)
+    # Ищем, где лежит папка в репозитории
     if [ -d "$REPO_DIR/$cfg" ]; then
         SRC_DIR="$REPO_DIR/$cfg"
     elif [ -d "$REPO_DIR/.config/$cfg" ]; then
         SRC_DIR="$REPO_DIR/.config/$cfg"
     fi
 
-    # Если нашли — сносим дефолт подчистую и КОПИРУЕМ паку целиком
+    # Если нашли — выжигаем дефолт с флагом -rf (чтобы не было ошибок 'Directory not empty')
     if [ -n "$SRC_DIR" ]; then
-        sudo rm -rf "$HOME/.config/$cfg"
+        # Удаляем и файл, и папку, и возможные старые симлинки
+        rm -rf "$HOME/.config/$cfg" 2>/dev/null || true
+        sudo rm -rf "$HOME/.config/$cfg" 2>/dev/null || true
+        
+        # Теперь чистое копирование папки целиком
         cp -r "$SRC_DIR" "$HOME/.config/"
         echo "Конфиг [$cfg] успешно СКОПИРОВАН в ~/.config/"
     fi
@@ -71,10 +75,9 @@ elif [ -f "$REPO_DIR/.config/dolphinrc" ]; then
 fi
 
 if [ -n "$DOLPHIN_SRC" ]; then
-    sudo rm -f "$HOME/.config/dolphinrc"
+    rm -rf "$HOME/.config/dolphinrc" 2>/dev/null || true
     cp "$DOLPHIN_SRC" "$HOME/.config/"
     echo "Конфиг Dolphin успешно скопирован!"
-fi
 
 echo "=== 6. Включение автозапуска сети ==="
 sudo systemctl enable --now NetworkManager
