@@ -78,6 +78,7 @@ if [ -n "$DOLPHIN_SRC" ]; then
     rm -rf "$HOME/.config/dolphinrc" 2>/dev/null || true
     cp "$DOLPHIN_SRC" "$HOME/.config/"
     echo "Конфиг Dolphin успешно скопирован!"
+fi
 
 echo "=== 6. Включение автозапуска сети ==="
 sudo systemctl enable --now NetworkManager
