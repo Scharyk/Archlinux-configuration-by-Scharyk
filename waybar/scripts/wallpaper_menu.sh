@@ -40,3 +40,9 @@ hyprctl hyprpaper wallpaper "$MONITOR,$WALL_DIR/$chosen" 2>/dev/null
 
 echo "preload = $WALL_DIR/$chosen" > ~/.config/hypr/hyprpaper.conf
 echo "wallpaper = $MONITOR,$WALL_DIR/$chosen" >> ~/.config/hypr/hyprpaper.conf
+
+# 1. Вытаскиваем цвета из выбранной картинки (используем ту же переменную, что и для обоев)
+   wal -i "$SELECT" -o backend wal
+
+   # 2. Перезапускаем Waybar, чтобы применился стиль с новыми цветами
+   killall waybar && waybar &

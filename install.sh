@@ -14,12 +14,24 @@ fi
 
 echo "=== 2. Установка официальных пакетов Арча ==="
 PACKAGES=(
-    hyprland hyprpaper waybar rofi kitty dunst dolphin
-    networkmanager network-manager-applet bluez bluez-utils polkit-kde-agent
-    pipewire pipewire-alsa pipewire-jack pipewire-pulse gst-plugin-pipewire wireplumber libpulse
-    grim slurp wl-clipboard imagemagick xdg-desktop-portal-hyprland xdg-utils qt5-wayland qt6-wayland
-    breeze-icons hicolor-icon-theme yad uwsm ttf-nerd-fonts-symbols woff2-font-awesome
+    # Графическая среда и блокировка/выход
+    hyprland hyprpaper waybar dunst rofi wofi wlogout waypaper sddm uwsm xdg-desktop-portal-hyprland
+    
+    # Терминал и консольные украшательства (для красоты)
+    kitty fastfetch cmatrix cava tty-clock htop jq imagemagick python-pywal python-pillow
+    
+    # Системный минимум (утилиты, буфер, скриншоты)
+    git nano vim wget wl-clipboard grim slurp yad network-manager-applet openbsd-netcat zram-generator
+    
+    # Звук и Bluetooth (чтобы всё работало из коробки)
+    pipewire pipewire-alsa pipewire-jack pipewire-pulse gst-plugin-pipewire wireplumber libpulse bluez bluez-utils
+    
+    # Обязательные шрифты (иначе иконки в Waybar сломаются!)
+    ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-common woff2-font-awesome
 )
+
+# Установка только необходимых пакетов
+yay -S --needed "${PACKAGES[@]}"
 sudo pacman -S --noconfirm "${PACKAGES[@]}"
 
 echo "=== 3. Проверка и установка AUR-помощника (yay) ==="

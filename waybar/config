@@ -15,27 +15,27 @@
         "on-click": "activate"
     },
     "hyprland/window": {
-        "format": " 󰣇  {title}",
+        "format": "[ 󰣇  {title}   ]",
         "max-length": 30,
         "separate-outputs": true
     },
     "clock": {
         "interval": 1,
-        "format": "󱎫 {:%H:%M:%S}",
+        "format": "-󱎫 {:%H:%M:%S}-",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
     "hyprland/language": {
-           "format": "󰌌 {}",
+           "format": "(󰌌 {})",
            "format-en": "EN",
            "format-ru": "RU",
            "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next"
        },
     "cpu": {
-        "format": "󰍛 {usage}%",
+        "format": "(󰍛 {usage}%)",
         "tooltip": false
     },
     "pulseaudio": {
-        "format": "󰕾 {volume}%",
+        "format": "(󰕾 {volume})%",
         "format-muted": "󰝟 Muted",
         "on-click": "~/linux_betterwindows/waybar/scripts/sound_menu.sh"
     },
