@@ -26,3 +26,5 @@ fi
 /usr/bin/hyprctl hyprpaper unload all
 
 echo "Кайф! Поставили случайные обои: $(basename "$WALLPAPER")"
+
+swaync-client -rs

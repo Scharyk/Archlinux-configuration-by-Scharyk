@@ -1,0 +1,55 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+  "logo": {
+    "type": "file",
+    "source": "/home/scharyk/.config/fastfetch/arch_sword.txt",
+    "color": {
+      "1": "red" // Окрасит наш меч в красный цвет, как на картинке!
+    },
+    "padding": {
+      "top": 1,
+      "left": 2,
+      "right": 4
+    }
+  },
+  "display": {
+    "separator": " ➔  "
+  },
+  "modules": [
+    "title",
+    "separator",
+    {
+      "type": "os",
+      "key": "  󰣇 OS"
+    },
+    {
+      "type": "kernel",
+      "key": "  󰒋 Ядро"
+    },
+    {
+      "type": "uptime",
+      "key": "  󱎫 Аптайм"
+    },
+    {
+      "type": "packages",
+      "key": "  󰏖 Пакеты"
+    },
+    {
+      "type": "wm",
+      "key": "   Окна"
+    },
+    {
+      "type": "terminal",
+      "key": "   Терминал"
+    },
+    {
+      "type": "memory",
+      "key": "  󰍛 Память"
+    },
+    "break",
+    {
+      "type": "colors",
+      "symbol": "circle"
+    }
+  ]
+}
