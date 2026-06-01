@@ -32,40 +32,37 @@ fi
 echo "=== 4. Установка недостающих утилит из AUR через yay ==="
 yay -S --noconfirm wlogout waypaper
 
-echo "=== 5. Скачивание репозитория и жесткое создание СВЯЗЕЙ ==="
+echo "=== 5. Скачивание репозитория и нормальное КОПИРОВАНИЕ конфигов ==="
 REPO_DIR="$HOME/linux_betterwindows"
 
-# Если папки ещё нет, качаем репозиторий
+# Если папки репозитория нет, качаем
 if [ ! -d "$REPO_DIR" ]; then
     git clone https://github.com/Scharyk/Archlinux-configuration-by-Scharyk.git "$REPO_DIR"
 fi
 
+# Жестко создаем чистую .config
 mkdir -p "$HOME/.config"
 
-# Список папок для создания связей
+# Список папок для копирования
 CONFIGS=(hypr rofi waybar kitty wlogout waypaper dunst gtk-3.0)
 for cfg in "${CONFIGS[@]}"; do
-    # Проверяем, где лежит конфиг в репозитории (в корне или в .config)
     SRC_DIR=""
+    # Ищем, где лежит папка в репозитории (в корне или в .config)
     if [ -d "$REPO_DIR/$cfg" ]; then
         SRC_DIR="$REPO_DIR/$cfg"
     elif [ -d "$REPO_DIR/.config/$cfg" ]; then
         SRC_DIR="$REPO_DIR/.config/$cfg"
     fi
 
-    # Если нашли конфиг в репозитории — привязываем
+    # Если нашли — сносим дефолт подчистую и КОПИРУЕМ паку целиком
     if [ -n "$SRC_DIR" ]; then
-        # ИСПРАВЛЕНО: Выжигаем старые дефолтные папки и файлы через sudo, 
-        # чтобы гарантированно стереть мусор от пакмана и не плодить матрешек
-        sudo rm -rf "$HOME/.config/$cfg" "$HOME/.config/${cfg}land.conf"
-        
-        # Создаем чистую ссылку
-        ln -sfn "$SRC_DIR" "$HOME/.config/$cfg"
-        echo "Связь создана успешно: $cfg -> $SRC_DIR"
+        sudo rm -rf "$HOME/.config/$cfg"
+        cp -r "$SRC_DIR" "$HOME/.config/"
+        echo "Конфиг [$cfg] успешно СКОПИРОВАН в ~/.config/"
     fi
 done
 
-# Привязываем файл дельфина
+# Копируем файл дельфина
 DOLPHIN_SRC=""
 if [ -f "$REPO_DIR/dolphinrc" ]; then
     DOLPHIN_SRC="$REPO_DIR/dolphinrc"
@@ -75,8 +72,8 @@ fi
 
 if [ -n "$DOLPHIN_SRC" ]; then
     sudo rm -f "$HOME/.config/dolphinrc"
-    ln -sfn "$DOLPHIN_SRC" "$HOME/.config/dolphinrc"
-    echo "Связь для Dolphin создана!"
+    cp "$DOLPHIN_SRC" "$HOME/.config/"
+    echo "Конфиг Dolphin успешно скопирован!"
 fi
 
 echo "=== 6. Включение автозапуска сети ==="
