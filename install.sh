@@ -83,6 +83,44 @@ fi
 echo "=== 6. Включение автозапуска сети ==="
 sudo systemctl enable --now NetworkManager
 
+# =========================================================
+# Настройка экрана логина в стиле CachyOS (SDDM)
+# =========================================================
+echo "=== Настройка SDDM ==="
+
+# 1. Устанавливаем нужные зависимости
+sudo pacman -S --noconfirm sddm qt5-graphicaleffects qt5-quickcontrols2 qt5-svg imagemagick
+
+# 2. Создаем папку и качаем базовую тему Astronaut
+sudo mkdir -p /usr/share/sddm/themes
+if [ ! -d "/usr/share/sddm/themes/sddm-betterwindows" ]; then
+    echo "Скачиваем базовую тему Astronaut..."
+    sudo git clone https://github.com/Keyitdev/sddm-astronaut-theme.git /usr/share/sddm/themes/sddm-betterwindows
+fi
+
+# 3. Настраиваем черно-красный народный стиль через конфиг
+cat <<EOF | sudo tee /usr/share/sddm/themes/sddm-betterwindows/theme.conf.user > /dev/null
+[General]
+FormPosition="center"
+TextColor="#ff0000"
+AccentColor="#ff0000"
+MainColor="#111111"
+ButtonColor="#ff0000"
+HoverColor="#aa0000"
+FieldColor="#222222"
+FontSize="14"
+EOF
+
+# 4. Прописываем тему как дефолтную в системе
+sudo mkdir -p /etc/sddm.conf.d
+cat <<EOF | sudo tee /etc/sddm.conf.d/theme.conf > /dev/null
+[Theme]
+Current=sddm-betterwindows
+EOF
+
+# 5. Включаем автозапуск SDDM при старте системы
+sudo systemctl enable sddm.service --force
+
 echo "========================================================"
 echo "   УСТАНОВКА ЗАВЕРШЕНА! ВСЕ КОНФИГИ ПРИВЯЗАНЫ НАМЕРТВО! "
 echo "========================================================"
