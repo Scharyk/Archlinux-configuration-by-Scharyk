@@ -7,7 +7,6 @@ echo "=== 1. Установка системных сборщиков ==="
 sudo pacman -Syu --noconfirm git base-devel wget curl jq nano
 
 echo "=== 1.5 Решение возможных конфликтов аудио-серверов ==="
-# Принудительно сносим старый jack2, если он мешает установке pipewire
 if pacman -Qq jack2 &>/dev/null; then
     echo "Обнаружен jack2. Безопасно удаляем для перехода на Pipewire..."
     sudo pacman -Rdd --noconfirm jack2 || true
@@ -33,28 +32,33 @@ fi
 echo "=== 4. Установка недостающих утилит из AUR через yay ==="
 yay -S --noconfirm wlogout waypaper
 
-echo "=== 5. Скачивание репозитория и создание СВЯЗЕЙ (симлинков) ==="
+echo "=== 5. Скачивание репозитория и жесткое создание СВЯЗЕЙ ==="
 REPO_DIR="$HOME/Archlinux-configuration-by-Scharyk"
 
+# Если папки репозитория ещё нет, качаем её
 if [ ! -d "$REPO_DIR" ]; then
     git clone https://github.com/Scharyk/Archlinux-configuration-by-Scharyk.git "$REPO_DIR"
 fi
 
+# Жестко создаем чистую папку .config, если её нет
 mkdir -p ~/.config
 
 # Список папок для создания связей
 CONFIGS=(hypr rofi waybar kitty wlogout waypaper dunst gtk-3.0)
 for cfg in "${CONFIGS[@]}"; do
     if [ -d "$REPO_DIR/.config/$cfg" ]; then
-        rm -rf ~/.config/$cfg
+        # НАМЕНЕННО: Удаляем ЛЮБЫЕ дефолтные папки или файлы, которые создал pacman
+        sudo rm -rf ~/.config/$cfg
+        
+        # Создаем чистую символическую ссылку на твою папку из гитхаба
         ln -s "$REPO_DIR/.config/$cfg" ~/.config/$cfg
-        echo "Создана живая связь для конфига: $cfg"
+        echo "Создана ЖЕСТКАЯ живая связь для конфига: $cfg"
     fi
 done
 
 # Привязываем файл дельфина
 if [ -f "$REPO_DIR/.config/dolphinrc" ]; then
-    rm -f ~/.config/dolphinrc
+    sudo rm -f ~/.config/dolphinrc
     ln -s "$REPO_DIR/.config/dolphinrc" ~/.config/dolphinrc
     echo "Создана живая связь для Dolphin!"
 fi
@@ -63,5 +67,5 @@ echo "=== 6. Включение автозапуска сети ==="
 sudo systemctl enable --now NetworkManager
 
 echo "========================================================"
-echo "   ВСЕ СВЯЗИ НАСТРОЕНЫ! Перезагружайся и заходи!       "
+echo "   ВСЕ ДЕФОЛТЫ СНЕСЕНЫ, СВЯЗИ НАСТРОЕНЫ ИДЕАЛЬНО!      "
 echo "========================================================"
