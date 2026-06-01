@@ -104,6 +104,19 @@ sudo systemctl enable --now NetworkManager
 # =========================================================
 # Настройка экрана логина в стиле CachyOS (SDDM)
 # =========================================================
+
+echo "=== 5.5 Генерация базовых цветов Pywal (чтобы Waybar не падал) ==="
+# Создаем фейковую черную картинку, если у юзера еще нет папки с обоями
+mkdir -p "$HOME/Pictures"
+if [ ! -f "$HOME/Pictures/default_wallpaper.png" ]; then
+    echo "Создаем дефолтные обои..."
+    convert -size 1920x1080 xc:#111111 "$HOME/Pictures/default_wallpaper.png"
+fi
+
+# Насильно заставляем pywal сгенерировать кэш цветов
+echo "Запускаем первую генерацию цветов..."
+wal -i "$HOME/Pictures/default_wallpaper.png" --skip-wallpaper || true
+
 echo "=== Настройка SDDM ==="
 
 sudo pacman -S --noconfirm sddm qt5-graphicaleffects qt5-quickcontrols2 qt5-svg imagemagick
