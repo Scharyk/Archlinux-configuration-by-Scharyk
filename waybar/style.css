@@ -1,4 +1,4 @@
-@import url("file:///home/scharyk/.cache/wal/colors-waybar-clean.css");
+@import "../../.cache/wal/colors-waybar-clean.css";
 
 * {
     border: none;

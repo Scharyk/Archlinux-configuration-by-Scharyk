@@ -1,19 +1,28 @@
 #!/bin/bash
 
-   # Путь к картинке передается как аргумент (например: ./change_wallpaper.sh ~/Pictures/wall.png)
-   WALLPAPER=$1
+export PATH="/usr/local/bin:/usr/bin:/bin:$PATH"
 
-   if [ -z "$WALLPAPER" ]; then
-       echo "Использование: ./change_wallpaper.sh /путь/к/обоям.jpg"
-       exit 1
-   fi
+# Путь к твоей папке с обоями
+WALLPAPER_DIR="/home/scharyk/linux_betterwindows/Wallpapers"
 
-   # 1. Меняем обои (подставь swww или hyprpaper, смотря что у тебя работает)
-   swww img "$WALLPAPER" --transition-type random || hyprpaper &
+# Выбираем случайную картинку из папки (поддерживает jpg, jpeg, png)
+WALLPAPER=$(find "$WALLPAPER_DIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" \) | shuf -n 1)
 
-   # 2. Pywal вытаскивает палитру цветов
-   wal -i "$WALLPAPER" -q -t
+# Проверяем, нашлось ли вообще что-нибудь
+if [ -z "$WALLPAPER" ]; then
+    echo "Ошибка: В папке $WALLPAPER_DIR нет картинок!"
+    exit 1
+fi
 
-   # 3. Перезапускаем Waybar, чтобы применились новые цвета из @import
-   killall waybar
-   waybar &
+# Сканируем и ставим обои
+/usr/bin/hyprctl hyprpaper preload "$WALLPAPER"
+/usr/bin/hyprctl hyprpaper wallpaper ",$WALLPAPER"
+
+# Перекрашиваем Waybar
+/usr/bin/wal -i "$WALLPAPER"
+
+# Перезапускаем стили Waybar и чистим память
+/usr/bin/killall -SIGUSR2 waybar
+/usr/bin/hyprctl hyprpaper unload all
+
+echo "Кайф! Поставили случайные обои: $(basename "$WALLPAPER")"

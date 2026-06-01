@@ -1,6 +1,6 @@
 k#!/bin/bash
 
-WALL_DIR="$HOME/Wallpapers"
+WALL_DIR="$HOME/linux_betterwindows/Wallpapers"
 CACHE_DIR="$HOME/.cache/wallpaper_thumbs"
 
 mkdir -p "$WALL_DIR"
