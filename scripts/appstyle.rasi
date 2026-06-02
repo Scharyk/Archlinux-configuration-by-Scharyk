@@ -1,0 +1,79 @@
+/* Импортируем динамические цвета от pywal */
+@import "~/.cache/wal/colors-rofi-dark.rasi"
+
+configuration {
+    show-icons: true;
+    icon-theme: "Papirus";
+    disable-history: false;
+}
+
+window {
+    width: 85%;
+    height: 85%;
+    background-color: #1a1a1acc; /* Полупрозрачный фон */
+    border: 2px solid;
+    border-color: @selected-active-background;
+    border-radius: 16px;
+}
+
+mainbox {
+    background-color: transparent;
+    children: [ inputbar, listview ];
+}
+
+inputbar {
+    background-color: transparent;
+    padding: 15px 20px 5px 20px;
+    children: [ prompt, entry ];
+}
+
+prompt {
+    background-color: transparent;
+    text-color: @foreground;
+    margin-right: 10px;
+}
+
+entry {
+    background-color: transparent;
+    text-color: @foreground;
+    placeholder: "Поиск приложений...";
+}
+
+listview {
+    background-color: transparent;
+    columns: 4;       /* 4 колонки в ряд, чтобы приложения компактнее сидели */
+    lines: 3;         /* 3 строки */
+    cycle: true;
+    dynamic: true;
+    layout: vertical;
+    padding: 20px;
+    spacing: 20px;
+}
+
+element {
+    background-color: transparent;
+    orientation: vertical; /* Иконка сверху, текст снизу (как в GNOME) */
+    border-radius: 12px;
+    padding: 15px;
+}
+
+element selected {
+    background-color: #ffffff22; 
+    border: 1px solid;
+    border-color: @selected-active-background;
+}
+
+element-icon {
+    background-color: transparent;
+    size: 94px; /* Аккуратный размер квадратных иконок */
+    horizontal-align: 0.5;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: @foreground;
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+    margin: 10px 0px 0px 0px;
+    font: "Sans 10";
+}

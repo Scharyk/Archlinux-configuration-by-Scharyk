@@ -24,10 +24,20 @@ SELECTED=$(echo -e "$MENU_ITEMS" | rofi -dmenu -theme "$STYLE" -p "Обои:")
 if [ -n "$SELECTED" ]; then
     FILE="$DIR/$SELECTED"
     
-    # Применяем через hyprpaper
+    # Применяем обои
     hyprctl hyprpaper preload "$FILE"
     hyprctl hyprpaper wallpaper "eDP-1,$FILE"
     
-    # Генерируем новые цвета системы на основе выбранных обоев
+    # Генерируем новые цвета системы
     wal -i "$FILE"
+    
+    # Даем pywal время записать цвета
+    sleep 0.3
+    
+    # Жестко убиваем старый вейбар
+    pkill -9 waybar
+    sleep 0.2
+    
+    # Запускаем заново с принудительным указанием конфигов, чтобы сбросить кэш
+    waybar &
 fi
