@@ -38,11 +38,13 @@ Once installed, use these main shortcuts to navigate around:
 
     Super + C — Close active window
 
-    Super + W — Change Theme (Triggers script to randomize theme and re-color the whole system on the fly!)
+    Super + W — Change Theme and Wallpapers (random),  (Triggers script to randomize theme and re-color the whole system on the fly!)
   
     Super + A - Open the menu of change wallpapers!
 
     Super + F - Open the menu when you have all aplications and you can open iT!
+
+    Super + SHIFT + S - do a screenshot
 
     Click the Bell Icon on Waybar — Toggle the SwayNC Control Center
 
