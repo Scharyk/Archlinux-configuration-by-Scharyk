@@ -1,48 +1,29 @@
-k#!/bin/bash
+KK#!/bin/bash
 
-WALL_DIR="$HOME/linux_betterwindows/Wallpapers"
-CACHE_DIR="$HOME/.cache/wallpaper_thumbs"
+WALLPAPER_DIR="$HOME/linux_betterwindows/Wallpapers"
+THEME_DIR="$HOME/.config/rofi/dark-half.rasi"
 
-mkdir -p "$WALL_DIR"
-mkdir -p "$CACHE_DIR"
-
-cd "$WALL_DIR" 2>/dev/null || exit 1
-options=$(ls *.jpg *.jpeg *.png 2>/dev/null)
-
-if [ -z "$options" ]; then
-    echo "Папка ~/Wallpapers пуста!"
-    exit 1
+if [ ! -f "$THEME_DIR" ]; then
+    THEME_DIR="$HOME/linux_betterwindows/dark-half.rasi"
 fi
 
-# Генерируем ЧЁТКИЕ ГОРИЗОНТАЛЬНЫЕ превьюшки 16:9 (размер 500x281)
-for img in $options; do
-    if [ ! -f "$CACHE_DIR/$img" ]; then
-        convert "$img" -thumbnail 500x281^ -gravity center -extent 500x281 "$CACHE_DIR/$img" >/dev/null 2>&1
-    fi
-done
+# Собираем файлы (передаем путь как скрытое значение, а иконку как картинку)
+ROFI_INPUT=""
+while read -r img; do
+    ROFI_INPUT+="$img\0icon\x1f$img\n"
+done < <(find "$WALLPAPER_DIR" -type f \( -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" \))
 
-rofi_list=""
-for img in $options; do
-    rofi_list+="$img\x00icon\x1f$CACHE_DIR/$img\n"
-done
+# Просто вызываем тему, она теперь сама всё знает
+SELECTED_IMG=$(echo -e "$ROFI_INPUT" | rofi -dmenu -theme "$THEME_DIR" -p "Выбери обои:")
 
-# Вызываем Rofi через твою старую тему
-chosen=$(echo -e "$rofi_list" | rofi -dmenu -p "Обои" -show-icons -theme "$HOME/linux_betterwindows/waybar/scripts/theme.rasi")
-
-if [ -z "$chosen" ]; then
+if [ -z "$SELECTED_IMG" ]; then
     exit 0
 fi
 
-# Установка обоев через hyprpaper
-hyprctl hyprpaper preload "$WALL_DIR/$chosen" 2>/dev/null
-MONITOR=$(hyprctl monitors -j | jq -r '.[0].name')
-hyprctl hyprpaper wallpaper "$MONITOR,$WALL_DIR/$chosen" 2>/dev/null
+SELECTED_IMG=$(echo "$SELECTED_IMG" | xargs)
 
-echo "preload = $WALL_DIR/$chosen" > ~/.config/hypr/hyprpaper.conf
-echo "wallpaper = $MONITOR,$WALL_DIR/$chosen" >> ~/.config/hypr/hyprpaper.conf
-
-# 1. Вытаскиваем цвета из выбранной картинки (используем ту же переменную, что и для обоев)
-   wal -i "$SELECT" -o backend wal
-
-   # 2. Перезапускаем Waybar, чтобы применился стиль с новыми цветами
-   killall waybar && waybar &
+if [ -f "$HOME/apply_wallpaper.sh" ]; then
+    bash "$HOME/apply_wallpaper.sh" "$SELECTED_IMG"
+else
+    bash "$HOME/linux_betterwindows/apply_wallpaper.sh" "$SELECTED_IMG"
+fi

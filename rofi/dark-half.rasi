@@ -1,0 +1,49 @@
+@import "/home/scharyk/.cache/wal/colors-rofi-solid.rasi"
+
+configuration {
+    modi: "dmenu";
+    show-icons: true;
+}
+
+* {
+    /* Никаких transparent и rgba */
+    background-color: @bg-window; 
+    text-color: @fg-custom;
+}
+
+window {
+    /* Удаляем transparency: "real" */
+    location: center;
+    anchor: center;
+    width: 1500px;
+    height: 900px;
+    border: 2px;
+    border-color: @border-sel;
+}
+
+mainbox {
+    spacing: 20px;
+    padding: 30px;
+}
+
+inputbar {
+    background-color: @bg-normal;
+    padding: 15px;
+}
+
+listview {
+    columns: 3;
+    lines: 2;
+    spacing: 25px;
+}
+
+element {
+    background-color: @bg-normal;
+    border: 2px;
+    border-color: transparent;
+}
+
+element selected.normal {
+    background-color: @bg-selected;
+    border-color: @border-sel;
+}

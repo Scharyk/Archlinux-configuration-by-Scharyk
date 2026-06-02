@@ -1,0 +1,14 @@
+ani-cli
+google-chrome
+lianwall-bin
+liquidlauncher-bin
+obs-studio-git
+paru
+spotify
+tty-clock
+vesktop
+virtualbox-ext-oracle
+waypaper
+wlogout
+yay-bin
+yay-bin-debug
